@@ -214,6 +214,10 @@ Navigasi dan opsi di left_drawer.dart
 
 Lalu terakhir, dibuat folder widgets dan screens, dilakukan pemisahan file ke dalam folder yang sesuai fungsinya.
 
+#### Implementasi Bonus
+
+Implementasi bonus membuat show_item.dart untuk mendefinisikan halaman untuk menampung konten yang disubmit di form. Lalu didefinisikan model Artifact di artifact.dart dengan static variabel database untuk menyimpan artifact yang dibuat setelah submit form. Setelah submit form, dibuat object Artifact baru jika input valid. Di model Artifact, sudah didefiniskan menambahkan object baru ke static variabel database ketika object itu dibuat. Di show_item.dart, data Artifact yang ada ditambahkan ke halaman dengan layout ListView.
+
 ## Tugas 7
 
 ### Pertanyaan
