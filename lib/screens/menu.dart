@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:game_inventory/screens/artifact_form.dart';
+import 'package:game_inventory/widgets/left_drawer.dart';
+import 'package:game_inventory/widgets/artifact_card.dart';
 
 class MyHomePage extends StatelessWidget {
     MyHomePage({Key? key}) : super(key: key);
@@ -20,6 +23,7 @@ class MyHomePage extends StatelessWidget {
           ),
           backgroundColor: Colors.blue.shade900
         ),
+        drawer: const LeftDrawer(),
         body: SingleChildScrollView(
           // Widget wrapper yang dapat discroll
           child: Padding(
@@ -78,6 +82,12 @@ class ArtifactCardMenu extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
                 content: Text("Kamu telah menekan tombol ${item.name}")));
+            if (item.name == "Tambah Item") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ArtifactFormPage()),
+            );
+          }
         },
         child: Container(
           // Container untuk menyimpan Icon dan Text
@@ -104,12 +114,4 @@ class ArtifactCardMenu extends StatelessWidget {
       ),
     );
   }
-}
-
-class ArtifactItemMenu {
-  final String name;
-  final IconData icon;
-  final Color color;
-
-  ArtifactItemMenu(this.name, this.icon, this.color);
 }

@@ -1,5 +1,219 @@
 # Game Inventory Flutter
 
+## Tugas 8
+
+### Pertanyaan
+
+#### Jelaskan perbedaan antara Navigator.push() dan Navigator.pushReplacement(), disertai dengan contoh mengenai penggunaan kedua metode tersebut yang tepat!
+
+Navigator.push() menambahkan halaman saat ini ke stack navigasi tanpa menghapus halaman teratas pada stack sedangkan Navigator.pushReplacement() menambahkan halaman saat ini ke stack namun sebelumnya menghapus halaman teratas pada stack. Perbedaan ini membuat saat menggunakan Navigator.push() kita dapat back ke halaman sebelumnya sedangkan Navigator.pushReplacement tidak dapat kembali ke halaman sebelumnya karena halaman sebelumnya sudah diganti dengan halaman saat ini di stack.
+
+Contoh penggunaan Navigator.push() saat ingin melakukan implementasi halaman daftar item dan detail item. Detail item dapat melakukan back ke daftar item sehingga implementasinya lebih tepat dilakukan dengan Navigator.push(). Contoh penggunaan Navigator.pushReplacement() seperti saat implementasi halaman login dan daftar item. Sesudah login diarahkan ke daftar item namun tidak dapat kembali ke halaman login karena sudah login sehingga lebih tepat dilakukan dengan Navigator.pushReplacement().
+
+#### Jelaskan masing-masing layout widget pada Flutter dan konteks penggunaannya masing-masing!
+
+1. Container, widget yang menampung konten-konten. Dapat menampung child yang dapat diatur padding, margin dan lainnya.
+
+2. Align, widget yang mengatur posisi dari suatu konten dan dapat mengubah ukurannya sesuai ukuran childnya.
+
+3. Row, widget yang mengatur untuk menempatkan widget dalam satu baris secara horizontal.
+
+4. Column, widget yang mengatur untuk menempatkan widget dalam satu kolom secara vertikal.
+
+5. GridView, widget layout untuk menampilkan konten dalam pattern grid.
+
+6. ListView, widget layout untuk menampilkan list konten secara linear yang dapat discroll.
+
+7. Table, widget layout yang menampilkan child dalam bentuk tabel (kolom dan baris).
+
+#### Sebutkan apa saja elemen input pada form yang kamu pakai pada tugas kali ini dan jelaskan mengapa kamu menggunakan elemen input tersebut!
+
+Elemen input form yang digunakan adalah TextFormField. TextFormField digunakan karena dapat memberikan label dan hints pada fieldnya dan dapat membuat validasi input secara custom dengan membuat fungsi validasi sesuai ketentuan soal.
+
+#### Bagaimana penerapan clean architecture pada aplikasi Flutter?
+
+Penerapan clean architecture pada Flutter diterapkan dengan memisahkan struktur aplikasi menjadi bagian-bagian sesuai dengan fungsinya masing-masing. Sepeti di tugas ini, dibagi menjadi folder widgets dan screens. Pemisahan bagian-bagian sesuai fungsinya membuat aplikasi yang scalable dan modular. Pemisahan ini membuat aplikasi mudah untuk didebug untuk bagian tertentu saja.
+
+### Implementasi Checklist
+
+#### Membuat formulir tambah item dan ketika ditekan save akan muncul pop up item dibuat.
+
+Pertama dibuat file baru artifact_form.dart. Lalu definisikan kelas ArtifactForm lalu definisikan name, amount, dan description. Lalu buat TextFormField dan atur layout dan lainnya. Lalu dibuat fungsi validasi untuk setiap field yang ada. Lalu dibuat tombol save yang ketika ditekan dicek validasi terlebih dahulu, jika valid akan muncul pop up dialog item dibuat. Isi body form pada artifact_form.dart sebagai berikut.
+```
+        body: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Artifact Name",
+                    labelText: "Artifact Name",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onChanged: (String? value) {
+                    setState(() {
+                      _name = value!;
+                    });
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Nama artifak tidak boleh kosong!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Amount",
+                    labelText: "Amount",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onChanged: (String? value) {
+                    setState(() {
+                      _amount = int.parse(value!);
+                    });
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Jumlah tidak boleh kosong!";
+                    }
+                    if (int.tryParse(value) == null) {
+                      return "Jumlah harus berupa angka!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Description",
+                    labelText: "Description",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onChanged: (String? value) {
+                    setState(() {
+                      _description = value!;
+                    });
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Deskripsi tidak boleh kosong!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.blue.shade900),
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Artifak berhasil tersimpan'),
+                              content: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Nama Artifak: $_name'),
+                                    Text('Jumlah: $_amount'),
+                                    Text('Deskripsi: $_description'),
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  child: const Text('OK'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        _formKey.currentState!.reset();
+                      }
+                      //_formKey.currentState!.reset();
+                    },
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ]),
+          ),
+        ));
+```
+
+#### Mengarahkan pengguna ke halaman form tambah item baru ketika menekan tombol Tambah Item pada halaman utama.
+
+Di menu.dart ditambahkan kondisi ketika clicked jika nama widget adalah tambah item dibuat Navigator.push() ke ArtifactForm yang dibuat sebelumnya.
+
+```
+            if (item.name == "Tambah Item") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ArtifactFormPage()),
+            );
+```
+
+#### Membuat sebuah drawer pada aplikasi dengan minimal dua opsi
+
+Membuat file baru left_drawer.dart lalu definisikan left drawer yang diisi dengan dua opsi, yaitu halaman utama dan tambah item. Halaman utama lalu dinavigasi jika diklik ke homepage, sedangkan jika tambah item ditekan dinavigasi ke form tambah artifak.
+
+Navigasi dan opsi di left_drawer.dart
+
+```
+          ListTile(
+            leading: const Icon(Icons.home_outlined),
+            title: const Text('Halaman Utama'),
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyHomePage(),
+                  ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add),
+            title: const Text('Add Artifact'),
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ArtifactFormPage(),
+                  ));
+            },
+          ),
+```
+
+Lalu terakhir, dibuat folder widgets dan screens, dilakukan pemisahan file ke dalam folder yang sesuai fungsinya.
+
 ## Tugas 7
 
 ### Pertanyaan
