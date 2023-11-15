@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_inventory/screens/menu.dart';
 import 'package:game_inventory/screens/artifact_form.dart';
+import 'package:game_inventory/screens/show_item.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -40,12 +41,23 @@ class LeftDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.home_outlined),
-            title: const Text('Halaman Utama'),
+            title: const Text('Main Page'),
             onTap: () {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MyHomePage(),
+                  ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.list),
+            title: const Text('Artifact List'),
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ShowItemPage(),
                   ));
             },
           ),

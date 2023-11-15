@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_inventory/artifact.dart';
 import 'package:game_inventory/widgets/left_drawer.dart';
 
 class ArtifactFormPage extends StatefulWidget {
@@ -114,6 +115,7 @@ class _ArtifactFormPageState extends State<ArtifactFormPage> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        Artifact newArtifact = new Artifact(_name, _amount, _description);
                         showDialog(
                           context: context,
                           builder: (context) {

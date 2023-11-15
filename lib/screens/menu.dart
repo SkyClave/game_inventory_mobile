@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:game_inventory/screens/artifact_form.dart';
 import 'package:game_inventory/widgets/left_drawer.dart';
 import 'package:game_inventory/widgets/artifact_card.dart';
+import 'package:game_inventory/screens/show_item.dart';
 
 class MyHomePage extends StatelessWidget {
     MyHomePage({Key? key}) : super(key: key);
@@ -86,6 +87,12 @@ class ArtifactCardMenu extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ArtifactFormPage()),
+            );
+            }
+            if (item.name == "Lihat Item") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ShowItemPage()),
             );
           }
         },
