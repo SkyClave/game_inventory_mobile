@@ -1,5 +1,13 @@
 # Game Inventory Flutter
 
+## Tugas 9
+
+### Pertanyaan
+
+#### Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+
+
+
 ## Tugas 8
 
 ### Pertanyaan

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:game_inventory/screens/artifact_form.dart';
 import 'package:game_inventory/widgets/left_drawer.dart';
 import 'package:game_inventory/widgets/artifact_card.dart';
-import 'package:game_inventory/screens/show_item.dart';
+import 'package:game_inventory/screens/list_item.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
+import 'dart:convert';
+import 'package:game_inventory/screens/login.dart';
 
 class MyHomePage extends StatelessWidget {
     MyHomePage({Key? key}) : super(key: key);
@@ -73,11 +77,12 @@ class ArtifactCardMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Material(
       color: item.color,
       child: InkWell(
         // Area responsive terhadap sentuhan
-        onTap: () {
+        onTap: () async {
           // Memunculkan SnackBar ketika diklik
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -89,12 +94,31 @@ class ArtifactCardMenu extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => ArtifactFormPage()),
             );
             }
-            if (item.name == "Lihat Item") {
+            else if (item.name == "Lihat Item") {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ShowItemPage()),
+                MaterialPageRoute(builder: (context) => ItemPage()),
             );
-          }
+            }
+            else if (item.name == "Logout") {
+              final response = await request.logout(
+                  "https://alwin-djuliansah-tugas.pbp.cs.ui.ac.id/auth/logout/");
+              String message = response["message"];
+              if (response['status']) {
+                String uname = response["username"];
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("$message Sampai jumpa, $uname."),
+                ));
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("$message"),
+                ));
+              }
+            }
         },
         child: Container(
           // Container untuk menyimpan Icon dan Text

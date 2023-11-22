@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_inventory/screens/menu.dart';
 import 'package:game_inventory/screens/artifact_form.dart';
-import 'package:game_inventory/screens/show_item.dart';
+import 'package:game_inventory/screens/list_item.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -57,7 +57,7 @@ class LeftDrawer extends StatelessWidget {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ShowItemPage(),
+                    builder: (context) => ItemPage(),
                   ));
             },
           ),
