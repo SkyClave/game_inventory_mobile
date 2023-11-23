@@ -6,6 +6,19 @@
 
 #### Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
 
+Iya, data JSON dapat diambil tanpa membuat model terlebih dahulu. Hal ini dapat lebih baik daripada membuat model jika data tidak terlalu kompleks. Jika data terlalu kompleks dan dibutuhkan validasi data, membuat model terlebih dahulu lebih baik.
+
+#### Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+
+CookieRequest berfungsi sebagai objek untuk menyimpan data-data cookie dan request session saat ini. Alasan CookieRequest perlu dibagikan ke semua komponen agar setiap komponen dapat mengakses data cookie yang ada secara langsung sehingga perilaku setiap komponen konsisten dengan satu sumber data yang sama.
+
+#### Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.
+
+Pertama Flutter melakukan request ke Django meminta data dalam format JSON. Setelah mendapatkan response dari server berupa data JSON, data JSON lalu diconvert ke Dart dengan bantuan dart:convert. Lalu data yang sudah dalam bentuk objek Dart (Model Item) dimasukkan ke widget data-datanya, lalu ditampilkan di Flutter.
+
+#### Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+
+Flutter pertama mengirim data form username dan password dengan request login ke Django. Lalu Django melakukan autentikasi. Jika berhasil autentikasi, Django akan mengembalikan token akses kepad Flutter. Token ini akan menentukan akses pengguna ke halaman menu. Flutter akan menggunakan token ini untuk mengakses data-data yang hanya dapat diakses user yang terautentikasi. Flutter lalu akan menampilkan menu yang berisi pilihan tindakan yang dapat dilakukan user di layar jika autentikasi berhasil.
 
 
 ## Tugas 8
