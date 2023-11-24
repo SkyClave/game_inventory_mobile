@@ -17,11 +17,6 @@ class ItemPage extends StatefulWidget {
 class _ItemPageState extends State<ItemPage> {
   Future<List<Item>> fetchItem(CookieRequest request) async {
     var response = await request.get('https://alwin-djuliansah-tugas.pbp.cs.ui.ac.id/json/');
-    //debugPrint(response.body);
-    // melakukan decode response menjadi bentuk json
-    // var data = jsonDecode(utf8.decode(response.bodyBytes));
-
-    // melakukan konversi data json menjadi object Product
     List<Item> list_item = [];
     for (var d in response) {
       if (d != null) {
