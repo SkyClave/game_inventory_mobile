@@ -16,7 +16,7 @@ class _DetailItemPageState extends State<DetailItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Item Details'),
+        title: Text('Artifact Details'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

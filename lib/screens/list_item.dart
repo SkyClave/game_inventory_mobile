@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:game_inventory/models/item.dart';
 import 'package:game_inventory/widgets/left_drawer.dart';
 import 'package:game_inventory/screens/detail_item.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class ItemPage extends StatefulWidget {
   const ItemPage({Key? key}) : super(key: key);
@@ -13,19 +15,15 @@ class ItemPage extends StatefulWidget {
 }
 
 class _ItemPageState extends State<ItemPage> {
-  Future<List<Item>> fetchItem() async {
-    var url = Uri.parse('https://alwin-djuliansah-tugas.pbp.cs.ui.ac.id/json/');
-    var response = await http.get(
-      url,
-      headers: {"Content-Type": "application/json"},
-    );
-
+  Future<List<Item>> fetchItem(CookieRequest request) async {
+    var response = await request.get('https://alwin-djuliansah-tugas.pbp.cs.ui.ac.id/json/');
+    //debugPrint(response.body);
     // melakukan decode response menjadi bentuk json
-    var data = jsonDecode(utf8.decode(response.bodyBytes));
+    // var data = jsonDecode(utf8.decode(response.bodyBytes));
 
     // melakukan konversi data json menjadi object Product
     List<Item> list_item = [];
-    for (var d in data) {
+    for (var d in response) {
       if (d != null) {
         list_item.add(Item.fromJson(d));
       }
@@ -35,13 +33,14 @@ class _ItemPageState extends State<ItemPage> {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
         appBar: AppBar(
           title: const Text('Artifact List'),
         ),
         drawer: const LeftDrawer(),
         body: FutureBuilder(
-            future: fetchItem(),
+            future: fetchItem(request),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.data == null) {
                 return const Center(child: CircularProgressIndicator());

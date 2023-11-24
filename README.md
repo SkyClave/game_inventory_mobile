@@ -20,6 +20,45 @@ Pertama Flutter melakukan request ke Django meminta data dalam format JSON. Sete
 
 Flutter pertama mengirim data form username dan password dengan request login ke Django. Lalu Django melakukan autentikasi. Jika berhasil autentikasi, Django akan mengembalikan token akses kepad Flutter. Token ini akan menentukan akses pengguna ke halaman menu. Flutter akan menggunakan token ini untuk mengakses data-data yang hanya dapat diakses user yang terautentikasi. Flutter lalu akan menampilkan menu yang berisi pilihan tindakan yang dapat dilakukan user di layar jika autentikasi berhasil.
 
+#### Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
+
+1. FutureBuilder untuk build widget berdasarkan hasil dari request secara asynchronous.
+
+2. GestureDetector untuk mendeteksi gesture (Klik) pada button.
+
+3. ElevatedButton sebagai widget tombol yang dapat memiliki background.
+
+4. Inkwell, memberikan efek visual ketika ditekan
+
+5. TextButton, button dengan text di dalamnya dan flat background.
+
+6. ListView, widget membangun item berdasarkan linear dan scrollable.
+
+7. TextField, untuk sebagai field menampung input text yang digunakan pada login dan register.
+
+### Implementasi Checklist
+
+#### Membuat halaman login pada proyek tugas Flutter dan mengintegrasikan sistem autentikasi Django dengan proyek tugas Flutter.
+
+Pada direktori screen di folder lib Flutter, dibuat file login.dart yang berisi widget-widget yang menyusun suatu form input username dan password, dan button login serta register.
+
+Pada proyek Django, dibuat aplikasi baru yaitu authentication lalu dibuat fungsi views.py yang berisi fungsi untuk menghandle data dari request nanti dan mengembalikan response. Setelah dirouting di aplikasi Django, link login lalu dihubungkan dengan login.dart di folder lib/screen. Jika status response ok dan terautentikasi, maka akan diarahkan ke halaman utama aplikasi Flutter. Hal yang sama juga dilakukan dengan fitur logout, dibuat halaman logout, lalu buat fungsi di django, routing, dan tambahkan ke aplikasi Flutter.
+
+#### Membuat model kustom sesuai dengan proyek aplikasi Django.
+
+Dengan bantuan Quicktype dan JSON data dari item di aplikasi Django, model dibuat dan didefinsikan dalam lib/models/item.dart
+
+#### Membuat halaman yang berisi daftar semua item yang terdapat pada endpoint JSON di Django yang terkait dengan user yang login saja
+
+Pertama dibuat list_item.dart untuk sebagai widget menampung data item nanti. Selanjutnya di aplikasi Django, fungsi json yang ada difilter hanya untuk user tertentu saja. Lalu setelah routing, link menuju data JSON, ditambahkan ke list_item.dart. Data JSON akan diproses menjadi model Item yang sudah dibuat di checklist sebelumnya. Lalu data item ditampilkan ke layar secara linear dengan ListView.
+
+#### Membuat halaman detail untuk setiap item yang terdapat pada halaman daftar Item.
+
+Saat membangun widget di list_item.dart untuk setiap item, ditambahkan GestureDetector untuk mendeteksi klik dari user. Jika diklik, akan diarahkan ke detail item page yang ada di detail_item.dart yang merupakan halaman yang berisi data lengkap dari sebuah item.
+
+#### Mengimplementasikan fitur registrasi akun pada aplikasi Flutter.
+
+Sama seperti login dan logout, dibuat halaman register dengan form register di aplikasi Flutter dengan tombol register yang pertama mengecek validasi input user lalu baru melakukan pendaftaran akun. Pada Django, dibuat fungsi views baru untuk menghandle input dari request POST dari Flutter nanti dan mengembalikan response. Sesudah dirouting, link ditambahkan ke aplikasi Flutter dan ditambah jika pendaftaran akun berhasil langsung ke halaman login.
 
 ## Tugas 8
 

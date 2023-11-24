@@ -1,4 +1,5 @@
 import 'package:game_inventory/screens/menu.dart';
+import 'package:game_inventory/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -101,6 +102,15 @@ class _LoginPageState extends State<LoginPage> {
                 }
               },
               child: const Text('Login'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                );
+              },
+              child: Text('Register'),
             ),
           ],
         ),
